@@ -42,5 +42,6 @@ jobs:
       - name: digger tfrun
         uses: diggerhq/tfrun@google-storage-lock
         env:
+          LOCK_PROVIDER: gcp
           GITHUB_CONTEXT: ${{ toJson(github) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
