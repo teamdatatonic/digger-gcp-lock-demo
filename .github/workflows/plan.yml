@@ -28,12 +28,19 @@ jobs:
           hub pr checkout $PR_NUM
         if: github.event_name == 'issue_comment'
         
-      - name: Configure Test AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          version: '>= 363.0.0'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
 
       - name: digger tfrun
         uses: diggerhq/tfrun@google-storage-lock
