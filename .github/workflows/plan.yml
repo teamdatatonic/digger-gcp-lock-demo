@@ -40,7 +40,7 @@ jobs:
         run: 'gcloud info'
 
       - name: digger tfrun
-        uses: diggerhq/tfrun@google-storage-lock
+        uses: diggerhq/tfrun@main
         env:
           LOCK_PROVIDER: gcp
           GITHUB_CONTEXT: ${{ toJson(github) }}
